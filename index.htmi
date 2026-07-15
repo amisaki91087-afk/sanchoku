@@ -374,15 +374,13 @@
 
         // --- ここに自分の Firebase config を貼り付けてください ---
         const firebaseConfig = {
-  　　　apiKey: "AIzaSyDFpd1rNLufPHwFnJShWCsX_1cVnHiwnxk",
-  　　　authDomain: "sanchoku-22307.firebaseapp.com",
-  　　　projectId: "sanchoku-22307",
- 　　　 storageBucket: "sanchoku-22307.firebasestorage.app",
-　　　  messagingSenderId: "1097325578564",
-　　　  appId: "1:1097325578564:web:dea50238d83e99430e2f11",
-　　　  measurementId: "G-C6KT2BCZ31"
-};
-
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
         // Firebase の初期化
         const app = initializeApp(firebaseConfig);
