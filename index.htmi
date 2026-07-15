@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>なつぞら じょくばいじょ（直売所）</title>
+    <!-- Google Fonts で丸みのあるかわいいフォントを読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 全体のデザイン（夏の田舎風） */
+        :root {
+            --sky-blue: #87CEEB;
+            --sun-yellow: #FFD700;
+            --grass-green: #2E8B57;
+            --wood-brown: #8B4513;
+            --soft-cream: #FFFDD0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Kiwi Maru', serif;
+            background: linear-gradient(to bottom, #a0e0ff 0%, #e0f7fa 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* ヘッダー（青空と入道雲とひまわり） */
+        header {
+            background: linear-gradient(to bottom, #3a7bd5, #3a6073);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 8px solid var(--sun-yellow);
+        }
+
+        /* 雲の飾り */
+        header::before {
+            content: "☁️";
+            font-size: 80px;
+            position: absolute;
+            left: 10%;
+            top: 10px;
+            opacity: 0.3;
+        }
+        header::after {
+            content: "🌻";
+            font-size: 80px;
+            position: absolute;
+            right: 10%;
+            bottom: -10px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* メインコンテンツ */
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* セクション共通（木製看板・温かみのあるカード風） */
+        section {
+            background-color: white;
+            border-radius: 20px;
+            border: 4px solid var(--wood-brown);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 0 var(--wood-brown);
+        }
+
+        h2 {
+            color: var(--wood-brown);
+            border-bottom: 3px dashed var(--sun-yellow);
+            padding-bottom: 10px;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 商品一覧（おやさい・くだもの） */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background-color: var(--soft-cream);
+            border: 3px solid #f0e68c;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .item-card:hover {
+            transform: scale(1.05) rotate(1deg);
+        }
+
+        .item-emoji {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+            color: var(--wood-brown);
+        }
+
+        .item-price {
+            font-size: 1.1rem;
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 8px;
+        }
+
+        /* コメントフォーム */
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            color: var(--wood-brown);
+        }
+
+        input[type="text"], textarea {
+            font-family: 'Kiwi Maru', serif;
+            padding: 12px;
+            border: 3px solid var(--sky-blue);
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: #3a7bd5;
+            box-shadow: 0 0 5px rgba(58, 123, 213, 0.5);
+        }
+
+        /* 送信ボタン（夏の太陽をイメージ） */
+        .submit-btn {
+            font-family: 'Kiwi Maru', serif;
+            background-color: #ff8c00;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            border-bottom: 5px solid #d07000;
+            transition: all 0.1s;
+        }
+
+        .submit-btn:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        /* コメント一覧 */
+        .comments-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment-card {
+            background-color: #f9f9f9;
+            border-left: 6px solid var(--sun-yellow);
+            padding: 15px;
+            border-radius: 0 15px 15px 0;
+            position: relative;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: var(--wood-brown);
+        }
+
+        .comment-body {
+            font-size: 1rem;
+            line-height: 1.4;
+            white-space: pre-wrap; /* 改行をそのまま表示 */
+        }
+
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--wood-brown);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー（上のお空） -->
+    <header>
+        <h1><ruby>夏<rt>なつ</rt></ruby>のひだまり<ruby>直売所<rt>ちょくばいじょ</rt></ruby></h1>
+        <div class="subtitle">☀️ おじいちゃんとおばあちゃんがつくった、あま〜いお野菜だよ！ 🍉</div>
+    </header>
+
+    <main>
+        <!-- 商品紹介（おやさい・くだもの） -->
+        <section>
+            <h2>🍅 きょうのおすすめ 🌽</h2>
+            <p style="margin: 0 0 20px 0; color: #555;">畑からとってきたばかりの、新鮮（しんせん）なごちそうだお！</p>
+            
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-emoji">🍉</div>
+                    <div class="item-name"><ruby>大玉<rt>おおだま</rt></ruby>スイカ</div>
+                    <div class="item-price">1こ 1,500円</div>
+                    <div class="item-desc">井戸水（いどみず）でひやして食べると、とってもあまいよ！</div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-emoji">🌽</div>
+                    <div class="item-name">トウモロコシ</div>
+                    <div class="item-price">1本 150円</div>
+                    <div class="item-desc">生でもかじれるくらい、ぷちぷちでジューシー！</div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-emoji">🍅</div>
+                    <div class="item-name">完熟トマト</div>
+                    <div class="item-price">1ふくろ 300円</div>
+                    <div class="item-desc">お日さまのひかりをたくさん浴びて、真っ赤にそだったよ！</div>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-emoji">🥒</div>
+                    <div class="item-name">トゲトゲきゅうり</div>
+                    <div class="item-price">3本 100円</div>
+                    <div class="item-desc">パリッとした歯ごたえ！お塩をつけて丸かじりしてみてね！</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- コメントを書くところ -->
+        <section>
+            <h2>✍️ ひとこと掲示板（けいじばん）</h2>
+            <p style="margin: 0 0 20px 0; color: #555;">「美味しかったよ！」「また買いにいくね！」など、みんなの声を聞かせてね！</p>
+            
+            <form id="commentForm" class="comment-form">
+                <div class="input-group">
+                    <label for="nickname">お名前（ニックネーム）</label>
+                    <input type="text" id="nickname" placeholder="なつおくん" required max="20">
+                </div>
+                <div class="input-group">
+                    <label for="message">メッセージ</label>
+                    <textarea id="message" rows="3" placeholder="スイカがとってもあまくて美味しかったよ！" required max="200"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">ひまわりポストに送る 🌻</button>
+            </form>
+        </section>
+
+        <!-- コメントが並ぶところ -->
+        <section>
+            <h2>💬 みんなのメッセージ</h2>
+            <div id="commentsList" class="comments-list">
+                <!-- ここに投稿されたコメントが追加されていきます -->
+                <p id="noComments" style="text-align: center; color: #888; padding: 20px 0;">まだメッセージがないよ。さいしょに書いてみてね！</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <p>🌻 なつぞら直売所 © 2026 🌻</p>
+    </footer>
+
+    <!-- Firebase SDK の読み込みと設定 -->
+    <script type="module">
+        // Firebase JS SDK v10 の読み込み (CDN)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // --- ここに自分の Firebase config を貼り付けてください ---
+       const firebaseConfig = {
+       apiKey: "AIzaSyDFpd1rNLufPHwFnJShWCsX_1cVnHiwnxk",
+       authDomain: "sanchoku-22307.firebaseapp.com",
+       projectId: "sanchoku-22307",
+       storageBucket: "sanchoku-22307.firebasestorage.app",
+       messagingSenderId: "1097325578564",
+       appId: "1:1097325578564:web:dea50238d83e99430e2f11",
+       measurementId: "G-C6KT2BCZ31"
+      };
+
+
+        // Firebase の初期化
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 要素を取得
+        const commentForm = document.getElementById('commentForm');
+        const nicknameInput = document.getElementById('nickname');
+        const messageInput = document.getElementById('message');
+        const commentsList = document.getElementById('commentsList');
+        const noCommentsText = document.getElementById('noComments');
+
+        // 日付をきれいに表示する関数
+        function formatDate(timestamp) {
+            if (!timestamp) return "たった今";
+            const date = timestamp.toDate();
+            const y = date.getFullYear();
+            const m = date.getMonth() + 1;
+            const d = date.getDate();
+            const hh = String(date.getHours()).padStart(2, '0');
+            const mm = String(date.getMinutes()).padStart(2, '0');
+            return `${y}年${m}月${d}日 ${hh}:${mm}`;
+        }
+
+        // コメント一覧をデータベースからとってきて画面に表示する関数
+        async function fetchComments() {
+            try {
+                // 作成日時（createdAt）の新しい順（desc）でデータを並び替えて取得するクエリ
+                const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                // いったんリストを空にする
+                commentsList.innerHTML = '';
+
+                if (querySnapshot.empty) {
+                    commentsList.appendChild(noCommentsText);
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    
+                    // コメントを表示するカードを作る
+                    const commentCard = document.createElement('div');
+                    commentCard.className = 'comment-card';
+
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'comment-header';
+
+                    // ニックネーム
+                    const authorSpan = document.createElement('span');
+                    authorSpan.className = 'comment-author';
+                    authorSpan.textContent = data.nickname; // XSS対策のため必ずtextContentを使う
+
+                    // 日付
+                    const timeSpan = document.createElement('span');
+                    timeSpan.textContent = formatDate(data.createdAt);
+
+                    // メッセージ本文
+                    const bodyDiv = document.createElement('div');
+                    bodyDiv.className = 'comment-body';
+                    bodyDiv.textContent = data.message; // XSS対策のため必ずtextContentを使う
+
+                    // 組み立てる
+                    headerDiv.appendChild(authorSpan);
+                    headerDiv.appendChild(timeSpan);
+                    commentCard.appendChild(headerDiv);
+                    commentCard.appendChild(bodyDiv);
+
+                    commentsList.appendChild(commentCard);
+                });
+            } catch (error) {
+                console.error("データの読み込みに失敗しました: ", error);
+                // コンフィグ未設定時のエラー対策用ダミー表示
+                if(firebaseConfig.apiKey === "YOUR_API_KEY") {
+                     noCommentsText.textContent = "⚠️ Firebaseの設定（firebaseConfig）を書き換えると、ここにみんなのコメントが表示されるよ！";
+                }
+            }
+        }
+
+        // フォームが送信されたときの処理
+        commentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nickname = nicknameInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!nickname || !message) return;
+
+            try {
+                // Firebaseにデータを新しく追加する
+                await addDoc(collection(db, "comments"), {
+                    nickname: nickname,
+                    message: message,
+                    createdAt: serverTimestamp() // サーバーの時間を使用
+                });
+
+                // 入力欄をきれいにする
+                nicknameInput.value = '';
+                messageInput.value = '';
+
+                // もう一度メッセージ一覧を読み込み直して画面を更新する
+                await fetchComments();
+                alert("メッセージをおくったよ！ありがとう！🌻");
+            } catch (error) {
+                console.error("送信に失敗しました: ", error);
+                alert("メッセージを送るのに失敗しちゃった。設定を確認してみてね！");
+            }
+        });
+
+        // ページを開いたときに最初にコメントを読み込む
+        fetchComments();
+    </script>
+</body>
+</html>
